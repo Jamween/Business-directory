@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import Businesses from "./Businesses"; // handle displaying individual business items.
+import Businesses from "./Businesses"; // This will handle displaying individual business items.
 
 function Read() {
   const [businesses, setBusinesses] = useState([]); // store fetched data
@@ -8,7 +8,7 @@ function Read() {
   const fetchData = () => {
     axios.get('http://localhost:4000/api/businesses')
       .then((response) => {
-        setBusinesses(response.data); // Update state with fetched data
+        setBusinesses(response.data); // Update  with fetched data
       })
       .catch((error) => {
         console.error("Error fetching businesses:", error);
