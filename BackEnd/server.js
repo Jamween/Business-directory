@@ -56,17 +56,27 @@ app.get('/api/businesses', async (req, res) => {
   // POST Create a new business
   app.post('/api/businesses', async (req, res) => {
     try {
-      const { name, category, address, hours, rating, website, contact } = req.body;
-      const newBusiness = new Business({ name, category, address, hours, rating, website, contact });
-      await newBusiness.save();
+      const { name, category, address, hours, rating, website, contact, imageUrl } = req.body;
   
-      console.log("New business saved:", newBusiness);
+      const newBusiness = new Business({
+        name,
+        category,
+        address,
+        hours,
+        rating: Number(rating),
+        website,
+        contact,
+        imageUrl 
+      });
+  
+      await newBusiness.save();
       res.status(201).json({ message: 'Business created successfully', business: newBusiness });
     } catch (error) {
       console.error('Error creating business:', error);
       res.status(500).json({ message: 'Internal server error' });
     }
   });
+  
   
   // PUT Update an existing business
   app.put('/api/business/:id', async (req, res) => {
