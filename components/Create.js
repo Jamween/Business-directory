@@ -46,8 +46,8 @@ function Create() {
 
   return (
     <div>
-      <h2>Add a New Business</h2>
-      <form onSubmit={handleSubmit}>
+  <h2 className="text-center">Add a New Business</h2>
+    <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Business Name:</label>
           <input
@@ -126,7 +126,8 @@ function Create() {
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary mt-3">Add Business</button>
+        <button type="submit" className="btn btn-success mt-3 w-100">Add Business</button>
+        
       </form>
     </div>
   );

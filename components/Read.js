@@ -29,18 +29,16 @@ function Read() {
     <div>
       <h2>Business List</h2>
 
-      {/* Search Input */}
-      <div className="mb-3">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Search for a business..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      </div>
-
-      {/* Pass filtered businesses to Businesses component */}
+      
+      <div className="search-bar">
+  <input
+    type="text"
+    className="form-control"
+    placeholder="Search for a business..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+  />
+</div>
       <Businesses myBusinesses={filteredBusinesses} ReloadData={fetchData} />
     </div>
   );
