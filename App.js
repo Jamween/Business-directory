@@ -6,6 +6,7 @@ import NavigationBar from './components/NavigationBar';
 import Read from './components/Read';
 import Create from './components/Create';
 import Edit from './components/Edit';
+import './App.css';
 
 function App() {
   return (

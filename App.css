@@ -11,6 +11,24 @@ body {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.navbar {
+  background-color: #343a40 !important; /* Dark background color */
+  color: white;
+}
+
+.navbar .nav-link {
+  color: rgba(255, 0, 0, 0.75) !important; /* Semi-transparent links */
+}
+
+.navbar .nav-link:hover {
+  color: rgb(43, 255, 0) !important; /* Bright white on hover */
+}
+
+.navbar-brand {
+  color: rgb(255, 0, 0) !important; /* Ensure the brand name is visible */
+}
+
+
 .card {
   margin-bottom: 20px;
   transition: transform 0.2s, box-shadow 0.2s;
@@ -20,6 +38,25 @@ body {
   transform: translateY(-5px);
   box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
 }
+
+.business-card {
+  height: 400px; /* Fixed card height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden; /* Prevent content overflow */
+}
+
+.business-card .card-body {
+  overflow-y: auto; /* Add scrolling for long content */
+}
+
+.business-card .card-img-top {
+  height: 150px; /* Fixed height for images */
+  object-fit: cover; /* Ensure images are contained properly */
+}
+
+
 
 .search-bar {
   margin: 20px auto;
