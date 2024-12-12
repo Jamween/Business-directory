@@ -4,7 +4,8 @@ import Businesses from "./Businesses";
 
 function Read() {
   const [businesses, setBusinesses] = useState([]); // Store fetched data
-  const [searchQuery, setSearchQuery] = useState(''); // Store the search query
+  const [searchQuery, setSearchQuery] = useState(''); // Store the text search query
+  const [searchCategory, setSearchCategory] = useState(''); // Store the selected category
 
   const fetchData = () => {
     axios.get('http://localhost:4000/api/businesses')
@@ -20,25 +21,48 @@ function Read() {
     fetchData(); // Fetch data when component mounts
   }, []);
 
-  // Filter businesses based on the search query
-  const filteredBusinesses = businesses.filter((business) =>
-    business.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Filter businesses based on search query and category
+  const filteredBusinesses = businesses.filter((business) => {
+    const matchesName = business.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = searchCategory
+      ? business.category.toLowerCase() === searchCategory.toLowerCase()
+      : true; // If no category is selected, match all
+
+    return matchesName && matchesCategory;
+  });
 
   return (
     <div>
       <h2>Business List</h2>
 
-      
-      <div className="search-bar">
-  <input
-    type="text"
-    className="form-control"
-    placeholder="Search for a business..."
-    value={searchQuery}
-    onChange={(e) => setSearchQuery(e.target.value)}
-  />
-</div>
+      {/* Search Input */}
+      <div className="mb-3">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search by name..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+
+      {/* Category Dropdown */}
+      <div className="mb-3">
+        <select
+          className="form-control"
+          value={searchCategory}
+          onChange={(e) => setSearchCategory(e.target.value)}
+        >
+          <option value="">All Categories</option>
+          {Array.from(new Set(businesses.map(b => b.category))).map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Render Filtered Businesses */}
       <Businesses myBusinesses={filteredBusinesses} ReloadData={fetchData} />
     </div>
   );
