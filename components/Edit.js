@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react'; 
+import { useParams, useNavigate } from 'react-router-dom'; 
+import axios from 'axios'; 
 
+// Component for editing an existing business
 function Edit() {
   const { id } = useParams(); // Get the business ID from the URL
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Navigate after editing
 
+  // form fields
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [address, setAddress] = useState('');
@@ -15,12 +17,12 @@ function Edit() {
   const [contact, setContact] = useState('');
   const [imageUrl, setImageUrl] = useState('');
 
-  // Fetch the existing business details
+  // Fetch the existing business details 
   useEffect(() => {
     axios.get(`http://localhost:4000/api/business/${id}`)
       .then((response) => {
-        const business = response.data;
-        setName(business.name);
+        const business = response.data; // Extract business data from response
+        setName(business.name); // Populate form 
         setCategory(business.category);
         setAddress(business.address);
         setHours(business.hours);
@@ -30,32 +32,34 @@ function Edit() {
         setImageUrl(business.imageUrl);
       })
       .catch((error) => {
-        console.error("Error fetching business:", error);
+        console.error("Error fetching business:", error); // Log errors
       });
-  }, [id]);
+  }, [id]); // business ID
 
-  // Handle form submission
+  // Handle form for updating the business
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form 
 
+    // Create an updated business object
     const updatedBusiness = {
       name,
       category,
       address,
       hours,
-      rating: Number(rating), 
+      rating: Number(rating), // Ensure rating is a number
       website,
       contact,
       imageUrl
     };
 
+    // Send a put request to update the business
     axios.put(`http://localhost:4000/api/business/${id}`, updatedBusiness)
       .then((response) => {
         console.log("Business updated:", response.data);
-        navigate('/read'); // Redirect to the business list
+        navigate('/read'); // Redirect to the list of businesses
       })
       .catch((error) => {
-        console.error("Error updating business:", error);
+        console.error("Error updating business:", error); // Log errors
       });
   };
 
@@ -147,4 +151,4 @@ function Edit() {
   );
 }
 
-export default Edit;
+export default Edit; 

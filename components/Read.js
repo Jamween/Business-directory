@@ -1,41 +1,40 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import Businesses from "./Businesses";
+import axios from "axios"; 
+import { useState, useEffect } from "react"; 
+import Businesses from "./Businesses"; 
 
+// Component to display and search the list of businesses
 function Read() {
-  const [businesses, setBusinesses] = useState([]); // Store fetched data
-  const [searchQuery, setSearchQuery] = useState(''); // Store the text search query
-  const [searchCategory, setSearchCategory] = useState(''); // Store the selected category
+  const [businesses, setBusinesses] = useState([]); // for storing fetched businesses
+  const [searchQuery, setSearchQuery] = useState(''); //  the search query
+  const [searchCategory, setSearchCategory] = useState(''); // for the category filter
 
+  // Fetch all businesses from the server
   const fetchData = () => {
     axios.get('http://localhost:4000/api/businesses')
       .then((response) => {
-        setBusinesses(response.data); // Update state with fetched data
+        setBusinesses(response.data); // Store the response data
       })
       .catch((error) => {
-        console.error("Error fetching businesses:", error);
+        console.error("Error fetching businesses:", error); // Log errors
       });
   };
 
   useEffect(() => {
-    fetchData(); // Fetch data when component mounts
+    fetchData(); // Fetch data when the component loads
   }, []);
 
-  // Filter businesses based on search query and category
+  // Filter businesses based on the search / category
   const filteredBusinesses = businesses.filter((business) => {
     const matchesName = business.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = searchCategory
       ? business.category.toLowerCase() === searchCategory.toLowerCase()
-      : true; // If no category is selected, match all
-
+      : true; // Match all categories if none selected
     return matchesName && matchesCategory;
   });
 
   return (
     <div>
       <h2>Business List</h2>
-
-      {/* Search Input */}
       <div className="mb-3">
         <input
           type="text"
@@ -53,7 +52,8 @@ function Read() {
           value={searchCategory}
           onChange={(e) => setSearchCategory(e.target.value)}
         >
-          <option value="">All Categories</option>
+          <option value="">All Categories</option> {/* Default option */}
+          {/*  generate  category options */}
           {Array.from(new Set(businesses.map(b => b.category))).map((category) => (
             <option key={category} value={category}>
               {category}
@@ -62,10 +62,10 @@ function Read() {
         </select>
       </div>
 
-      {/* Render Filtered Businesses */}
+      {/* Render the filtered businesses */}
       <Businesses myBusinesses={filteredBusinesses} ReloadData={fetchData} />
     </div>
   );
 }
 
-export default Read;
+export default Read; // Export the component

@@ -1,7 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
 
+// Component for adding a new business
 function Create() {
+  // form fields
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [address, setAddress] = useState('');
@@ -9,26 +11,29 @@ function Create() {
   const [rating, setRating] = useState('');
   const [website, setWebsite] = useState('');
   const [contact, setContact] = useState('');
-  const [imageUrl, setImageUrl] = useState(''); // State for the image URL
+  const [imageUrl, setImageUrl] = useState(''); 
 
+  // Handle form submission
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form 
 
+    // Create a new business object
     const newBusiness = {
       name,
       category,
       address,
       hours,
-      rating: Number(rating),
+      rating: Number(rating), // Ensure rating is a number
       website,
       contact,
-      imageUrl // Include the image URL
+      imageUrl
     };
 
+    // Send a request to add the business
     axios.post('http://localhost:4000/api/businesses', newBusiness)
       .then((response) => {
         console.log("Business added:", response.data);
-        // Clear the form
+        // Clear the form fields after submission
         setName('');
         setCategory('');
         setAddress('');
@@ -37,17 +42,17 @@ function Create() {
         setWebsite('');
         setContact('');
         setImageUrl('');
-        alert("Business added successfully!");
+        alert("Business added successfully!"); // Show success message
       })
       .catch((error) => {
-        console.error("Error adding business:", error);
+        console.error("Error adding business:", error); // Log errors
       });
   };
 
   return (
     <div>
-  <h2 className="text-center">Add a New Business</h2>
-    <form onSubmit={handleSubmit}>
+      <h2>Add a New Business</h2>
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Business Name:</label>
           <input
@@ -126,11 +131,10 @@ function Create() {
             required
           />
         </div>
-        <button type="submit" className="btn btn-success mt-3 w-100">Add Business</button>
-        
+        <button type="submit" className="btn btn-primary mt-3">Add Business</button>
       </form>
     </div>
   );
 }
 
-export default Create;
+export default Create; 
